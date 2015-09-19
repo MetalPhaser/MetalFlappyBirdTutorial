@@ -1,11 +1,11 @@
-import ExampleGameState from './states/ExampleGameState';
+import MenuState from './states/MenuState';
 
 class Game extends Phaser.Game {
 
 	constructor() {
-		super(800, 700, Phaser.AUTO, 'content', null);
-		this.state.add('ExampleGameState', ExampleGameState, false);
-		this.state.start('ExampleGameState');
+		super(288, 505, Phaser.AUTO, 'content', null);
+		this.state.add('MenuState', MenuState, false);
+		this.state.start('MenuState');
 	}
 }
 
