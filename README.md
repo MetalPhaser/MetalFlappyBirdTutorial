@@ -1,4 +1,7 @@
-# Metal Sole Phase Structure
+# Metal Flappy Bird Tutorial
+
+This is a simple repo to the beginning of the Flappy Bird redo tutorial.
+
 
 ## Usage
 
@@ -6,7 +9,7 @@ You need [Node.js and npm](https://nodejs.org/). You should also have git instal
 
 Clone the repository (or download the ZIP file)
 
-`git clone https://github.com/MetalPhaser/MetalPhaserStub.git`
+`git clone https://github.com/MetalPhaser/MetalFlappBirdTutorial.git`
 
 Install dependencies
 
@@ -34,6 +37,6 @@ If you modify the contents of other files, please manually restart the server.
 
 # FORKED FROM
 
-This structure started its life in Daniel Belohlavek's fantastic environment: [phaser-es6-boilerplate](https://github.com/belohlavek/phaser-es6-boilerplate).
+This is a repo related to the awesome tutorial authored by Jeremy Dowell
 
-This version will likely get more and more specific to Metal Sole's needs and thus diverge greatly. But enough cannot be stated about Daniel's great work. If you are just looking around I **HIGHLY** advise looking through his repo first.
+[Original Tutorial](http://www.codevinsky.com/phaser-2-0-tutorial-flappy-bird-part-1/)
