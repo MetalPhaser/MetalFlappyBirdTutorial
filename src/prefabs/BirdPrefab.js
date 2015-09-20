@@ -1,8 +1,9 @@
+import Base from '../utils/BaseSprite'
 
 let SPRITEKEY = 'birdSprite';
 let IMAGEPATH = 'images/bird.png';
 
-class Prefab extends Phaser.Sprite {
+class Prefab extends Base {
 	// keep this method in your prefab
 	constructor(game, x, y) {
 		super(game, x, y, SPRITEKEY);
