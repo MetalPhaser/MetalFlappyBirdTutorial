@@ -1,27 +1,22 @@
-import Base from '../utils/BaseSprite'
+/**
+ *  EXTENDS Phaser.Sprite
+ */
+class BaseSprite extends Phaser.Sprite {
 
-let SPRITEKEY = '_NAME_KEY_FOR_THIS_SPRITE_';
-let IMAGEPATH = '_PATH/TO/GRAPHIC/FILE_';
+	constructor(game, x, y, spriteKey) {
+		if ( !game ) {
+			throw new ReferenceError('Game reference was empty');
+		}
+		if ( !spriteKey ) {
+			throw new ReferenceError('SpriteKey reference was empty');
+		}
 
-class Prefab extends Base {
-	// keep this method in your prefab
-	constructor(game, x, y) {
-		super(game, x, y, SPRITEKEY);
+		super(game, x, y, spriteKey);
 
 		this.defineGeometry();
 		this.definePhysics();
 		this.defineAnimations();
 	}
-	// keep this method in your prefab
-	static preload (game) {
-		if ( !game ) {
-			throw new ReferenceError('Game reference was empty');
-		}
-
-		game.load.image(SPRITEKEY, IMAGEPATH);
-	}
-
-	// these are optional
 	defineGeometry() {
 		/**
 		 *  Choose Anchor Point
@@ -84,10 +79,7 @@ class Prefab extends Base {
 		//this.animations.play('flap', 12, true);
 	}
 	update() {}
+	kill() {}
 
-	// these you do NOT need in your prefab
-	static get key () {
-		return SPRITEKEY;
-	}
 }
-export default Prefab;
+export default BaseSprite;
