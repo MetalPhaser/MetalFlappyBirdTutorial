@@ -1,9 +1,9 @@
-
+import Base from "../utils/BaseSprite";
 let SPRITEKEY = 'birdSprite';
 let IMAGEPATH = 'images/bird.png';
 
 
-class Prefab extends Phaser.Sprite {
+class Prefab extends Base {
 	// keep this method in your prefab
 	constructor(game, x, y) {
 		super(game, x, y, SPRITEKEY);
@@ -18,7 +18,7 @@ class Prefab extends Phaser.Sprite {
 			throw new ReferenceError('Game reference was empty');
 		}
 
-		game.load.image(SPRITEKEY, IMAGEPATH);
+		game.load.spritesheet(SPRITEKEY, IMAGEPATH, 34,24,3);
 	}
 
 	// these are optional
@@ -80,8 +80,11 @@ class Prefab extends Phaser.Sprite {
 		 *  Animations
 		 *  This is needed for collision detection
 		 */
-		//this.animations.add('flap');
-		//this.animations.play('flap', 12, true);
+		this.animations.add('flap');
+		this.playFlap();
+	}
+	playFlap() {
+		this.animations.play('flap', 12, true);
 	}
 	update() {}
 
