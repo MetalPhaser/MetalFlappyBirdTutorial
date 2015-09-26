@@ -1,45 +1,30 @@
 import Base from '../utils/BaseSprite'
 
-let SPRITEKEY = 'birdSprite';
-let IMAGEPATH = 'images/bird.png';
+let SPRITEKEY = 'ground';
+let IMAGEPATH = 'images/ground.png';
 
-class Prefab extends Base {
+class Prefab extends Phaser.TileSprite {
 	// keep this method in your prefab
 	constructor(game, x, y) {
-		super(game, x, y, SPRITEKEY);
+		super(game, x, y, 335, 112, SPRITEKEY);
 
 		this.defineGeometry();
 		this.definePhysics();
 		this.defineAnimations();
+
 	}
 	// keep this method in your prefab
 	static preload (game) {
 		if ( !game ) {
 			throw new ReferenceError('Game reference was empty');
 		}
-		game.load.spritesheet(SPRITEKEY, IMAGEPATH, 34, 24, 3);
-	}
 
-	playFlap() {
-		this.animations.play('flap', 12, true);
+		game.load.image(SPRITEKEY, IMAGEPATH);
 	}
 
 	// these are optional
 	defineGeometry() {
-		/**
-		 *  Choose Anchor Point
-		 *  If you need a new point to position with and
-		 *  rotate around change the anchor point
-		 */
-		//this.anchor.setTo(0.5, 0.5);
-
-		/**
-		 *  Set Size
-		 *  If you need to
-		 */
-		//this.width = 100;
-		//this.height = 100;
-		//this.scale = 0.5;
+		this.autoScroll(-200, 0);
 	}
 	definePhysics() {
 		/**
@@ -82,14 +67,9 @@ class Prefab extends Base {
 		/**
 		 *  Animations
 		 */
-		this.animations.add('flap');
-		this.playFlap();
+		//this.animations.add('flap');
 	}
 	update() {}
 
-	// these you do NOT need in your prefab
-	static get key () {
-		return SPRITEKEY;
-	}
 }
 export default Prefab;
