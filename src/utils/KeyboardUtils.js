@@ -25,6 +25,13 @@ let KeyboardUtils = {
 	},
 	getStringValue    : function (code=-1) {
 		return String.fromCharCode(code) || null;
+	},
+	getKey : function (game, keycode) {
+		if ( !game ) {
+			throw new ReferenceError('Game reference was empty');
+		}
+
+		return game.input.keyboard.addKey(keycode);
 	}
 
 };

@@ -1,6 +1,6 @@
 import Base from "../utils/BaseSprite";
-let SPRITEKEY = 'birdSprite';
-let IMAGEPATH = 'images/bird.png';
+let SPRITEKEY = 'background';
+let IMAGEPATH = 'images/background.png';
 
 
 class Prefab extends Base {
@@ -18,7 +18,7 @@ class Prefab extends Base {
 			throw new ReferenceError('Game reference was empty');
 		}
 
-		game.load.spritesheet(SPRITEKEY, IMAGEPATH, 34,24,3);
+		game.load.image(SPRITEKEY, IMAGEPATH);
 	}
 
 	// these are optional
@@ -28,7 +28,7 @@ class Prefab extends Base {
 		 *  If you need a new point to position with and
 		 *  rotate around change the anchor point
 		 */
-		this.anchor.setTo(0.5, 0.5);
+		//this.anchor.setTo(0.5, 0.5);
 
 		/**
 		 *  Set Size
@@ -43,7 +43,7 @@ class Prefab extends Base {
 		 *  Enable Physics
 		 *  This is needed for collision detection
 		 */
-		this.game.physics.arcade.enableBody(this);
+		//this.game.physics.arcade.enableBody(this);
 
 		/**
 		 *  Collide with World
@@ -72,7 +72,7 @@ class Prefab extends Base {
 		 *  value for this prefab, this is the place
 		 */
 		//this.body.bounce.x     = 10;
-		this.body.bounce.y     = 0.2;
+		//this.body.bounce.y     = 10;
 
 	}
 	defineAnimations() {
@@ -80,23 +80,10 @@ class Prefab extends Base {
 		 *  Animations
 		 *  This is needed for collision detection
 		 */
-		this.animations.add('flap');
-		this.playFlap();
-	}
-	playFlap() {
-		this.animations.play('flap', 12, true);
 
 	}
-	flap(){
-		this.body.velocity.y -= 60;
-		this.game.add.tween(this).to({angle: -40}, 100).start();
 
-	}
-	update() {
-		if(this.angle < 90){
-			this.angle+=2.5;
-		}
-	}
+	update() {}
 
 	// these you do NOT need in your prefab
 	static get key () {

@@ -1,12 +1,12 @@
 import Base from "../utils/BaseSprite";
-let SPRITEKEY = 'birdSprite';
-let IMAGEPATH = 'images/bird.png';
+let SPRITEKEY = 'ground';
+let IMAGEPATH = 'images/ground.png';
 
 
-class Prefab extends Base {
+class GroundPrefab extends Phaser.TileSprite {
 	// keep this method in your prefab
 	constructor(game, x, y) {
-		super(game, x, y, SPRITEKEY);
+		super(game, x, y, 335, 112, SPRITEKEY);
 
 		this.defineGeometry();
 		this.definePhysics();
@@ -18,25 +18,12 @@ class Prefab extends Base {
 			throw new ReferenceError('Game reference was empty');
 		}
 
-		game.load.spritesheet(SPRITEKEY, IMAGEPATH, 34,24,3);
+		game.load.image(SPRITEKEY, IMAGEPATH);
 	}
 
 	// these are optional
 	defineGeometry() {
-		/**
-		 *  Choose Anchor Point
-		 *  If you need a new point to position with and
-		 *  rotate around change the anchor point
-		 */
-		this.anchor.setTo(0.5, 0.5);
-
-		/**
-		 *  Set Size
-		 *  If you need to
-		 */
-		//this.width = 100;
-		//this.height = 100;
-		//this.scale = 0.5;
+		this.autoScroll(-200,0);
 	}
 	definePhysics() {
 		/**
@@ -64,7 +51,7 @@ class Prefab extends Base {
 		 *  If you need your prefab to remain in place
 		 *  until you move it yourself, this is your item
 		 */
-		//this.body.immovable = true;
+		this.body.immovable = true;
 
 		/**
 		 *  Bounciness
@@ -72,7 +59,7 @@ class Prefab extends Base {
 		 *  value for this prefab, this is the place
 		 */
 		//this.body.bounce.x     = 10;
-		this.body.bounce.y     = 0.2;
+		//this.body.bounce.y     = 10;
 
 	}
 	defineAnimations() {
@@ -85,22 +72,12 @@ class Prefab extends Base {
 	}
 	playFlap() {
 		this.animations.play('flap', 12, true);
-
 	}
-	flap(){
-		this.body.velocity.y -= 60;
-		this.game.add.tween(this).to({angle: -40}, 100).start();
-
-	}
-	update() {
-		if(this.angle < 90){
-			this.angle+=2.5;
-		}
-	}
+	update() {}
 
 	// these you do NOT need in your prefab
 	static get key () {
 		return SPRITEKEY;
 	}
 }
-export default Prefab;
+export default GroundPrefab;
