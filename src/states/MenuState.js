@@ -1,13 +1,15 @@
 //import Config from '../config/game-config';
 //import KeyboardUtils from '../utils/KeyboardUtils';
 import BirdPrefab from '../prefabs/BirdPrefab';
+import GroundPrefab from '../prefabs/GroundPrefab';
+import BackgroundPrefab from '../prefabs/BackgroundPrefab';
 
 class State extends Phaser.State {
 
 	constructor() {
 		super();
 		console.log('MenuState: I am HERE');
-		this.backgroundSprite = null;
+		this.background = null;
 		this.bird = null;
 		this.ground = null;
 		this.title = null;
@@ -16,24 +18,25 @@ class State extends Phaser.State {
 	}
 
 	preload() {
-		this.game.load.image('background', 'images/background.png');
-		this.game.load.image('ground', 'images/ground.png');
+
 		this.game.load.image('title', 'images/title.png');
 		this.game.load.image('startButton', 'images/start-button.png');
 		//this.game.load.image('titleGroup', 'images/titleGroup.png');
 
 		BirdPrefab.preload(this.game);
+		GroundPrefab.preload(this.game);
+		BackgroundPrefab.preload(this.game);
 	}
 
 	create() {
 		// BACKGROUND
-		this.backgroundSprite = this.game.add.sprite(0, 0, 'background');
+		this.background = new BackgroundPrefab(this.game, 0,0);
+		this.game.add.existing(this.background);
 
 		// GROUND
-
-		this.ground = this.game.add.tileSprite(0, 0, 335, 112, 'ground');
+		this.ground = new GroundPrefab(this.game, 0, 0);
 		this.ground.y =this.game.world.height - this.ground.height;
-		this.ground.autoScroll(-100, 0);
+		this.game.add.existing(this.ground);
 
 		// BIRD
 		this.bird = new BirdPrefab(this.game, 205, 5);
@@ -61,13 +64,14 @@ class State extends Phaser.State {
 
 	startClick() {
 		console.log('ouch');
+		this.game.state.start('GameState');
 
 		// we want to know what half the button width and height is so we don't spill off the edge of the screen
-		var halfButtonWidth = this.startButton.width; // x variable
-		var halfButtonHeight = this.startButton.height; // y variable
+		//var halfButtonWidth = this.startButton.width; // x variable
+		//var halfButtonHeight = this.startButton.height; // y variable
 
-		this.startButton.x = this.game.rnd.integerInRange(halfButtonWidth, this.game.world.width-halfButtonWidth);
-		this.startButton.y = this.game.rnd.integerInRange(halfButtonHeight, this.game.world.height-halfButtonHeight);
+		//this.startButton.x = this.game.rnd.integerInRange(halfButtonWidth, this.game.world.width-halfButtonWidth);
+		//this.startButton.y = this.game.rnd.integerInRange(halfButtonHeight, this.game.world.height-halfButtonHeight);
 
 	}
 
