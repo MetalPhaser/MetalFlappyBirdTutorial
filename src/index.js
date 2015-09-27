@@ -7,10 +7,10 @@ class BunnyGame extends Phaser.Game {
 		super(288, 505, Phaser.AUTO, 'content', null);
 
 		this.state.add('GameState', GameState, false);
+		this.state.add('MenuState', MenuState, false);
+		//this.state.start('MenuState');
 		this.state.start('GameState');
 
-		this.state.add('MenuState', MenuState, false);
-		this.state.start('MenuState');
 	}
 }
 

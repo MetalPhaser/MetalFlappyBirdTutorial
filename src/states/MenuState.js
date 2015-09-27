@@ -2,6 +2,7 @@
 //import KeyboardUtils from '../utils/KeyboardUtils';
 import BirdPrefab from '../prefabs/BirdPrefab';
 import GroundPrefab from '../prefabs/GroundPrefab';
+import BackgroundPrefab from '../prefabs/BackgroundPrefab';
 
 class State extends Phaser.State {
 
@@ -19,17 +20,18 @@ class State extends Phaser.State {
 
 	preload() {
 
-		this.game.load.image('background',    'images/background.png');
 		this.game.load.image('title',         'images/title.png');
 		this.game.load.image('startButton',   'images/start-button.png');
 
 		BirdPrefab.preload(this.game);
 		GroundPrefab.preload(this.game);
+		BackgroundPrefab.preload(this.game);
 	}
 
 	create() {
 		// BACKGROUND
-		this.backgroundSprite = this.game.add.sprite(0, 0, 'background');
+		this.backgroundSprite = new BackgroundPrefab(this.game, 0, 0);
+		this.game.add.existing(this.backgroundSprite);
 
 		// GROUND
 		this.ground = new GroundPrefab(this.game, 0, 0);
@@ -60,7 +62,7 @@ class State extends Phaser.State {
 
 	startClick() {
 		console.log('yo. stop');
-		//this.game.state.start('GameState');
+		this.game.state.start('GameState');
 	}
 
 	shutdown() {}

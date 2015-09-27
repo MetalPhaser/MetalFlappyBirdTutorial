@@ -20,6 +20,11 @@ class Prefab extends Base {
 		game.load.spritesheet(SPRITEKEY, IMAGEPATH, 34, 24, 3);
 	}
 
+	flap() {
+		this.body.velocity.y -= 30;
+		this.game.add.tween(this).to({angle: -40}, 100).start();
+	}
+
 	playFlap() {
 		this.animations.play('flap', 12, true);
 	}
@@ -31,7 +36,7 @@ class Prefab extends Base {
 		 *  If you need a new point to position with and
 		 *  rotate around change the anchor point
 		 */
-		//this.anchor.setTo(0.5, 0.5);
+		this.anchor.setTo(0.5, 0.5);
 
 		/**
 		 *  Set Size
@@ -46,7 +51,7 @@ class Prefab extends Base {
 		 *  Enable Physics
 		 *  This is needed for collision detection
 		 */
-		//this.game.physics.arcade.enableBody(this);
+		this.game.physics.arcade.enableBody(this);
 
 		/**
 		 *  Collide with World
@@ -75,7 +80,7 @@ class Prefab extends Base {
 		 *  value for this prefab, this is the place
 		 */
 		//this.body.bounce.x     = 10;
-		//this.body.bounce.y     = 10;
+		//this.body.bounce.y     = .5;
 
 	}
 	defineAnimations() {
@@ -85,7 +90,11 @@ class Prefab extends Base {
 		this.animations.add('flap');
 		this.playFlap();
 	}
-	update() {}
+	update() {
+		if(this.angle < 90) {
+			this.angle += 2.5;
+		}
+	}
 
 	// these you do NOT need in your prefab
 	static get key () {

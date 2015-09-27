@@ -1,39 +1,49 @@
 import Base from '../utils/BaseSprite'
 
-let SPRITEKEY = 'ground';
-let IMAGEPATH = 'images/ground.png';
+let SPRITEKEY = 'background';
+let IMAGEPATH = 'images/background.png';
 
-class Prefab extends Phaser.TileSprite {
+class Prefab extends Base {
 	// keep this method in your prefab
 	constructor(game, x, y) {
-		super(game, x, y, 335, 112, SPRITEKEY);
+		super(game, x, y, SPRITEKEY);
 
 		this.defineGeometry();
 		this.definePhysics();
 		this.defineAnimations();
-
 	}
 	// keep this method in your prefab
 	static preload (game) {
 		if ( !game ) {
 			throw new ReferenceError('Game reference was empty');
 		}
-
-		console.log('PRELOAD OF GROUND PREFAB');
-
 		game.load.image(SPRITEKEY, IMAGEPATH);
 	}
 
+
 	// these are optional
 	defineGeometry() {
-		this.autoScroll(-200, 0);
+		/**
+		 *  Choose Anchor Point
+		 *  If you need a new point to position with and
+		 *  rotate around change the anchor point
+		 */
+		//this.anchor.setTo(0.5, 0.5);
+
+		/**
+		 *  Set Size
+		 *  If you need to
+		 */
+		//this.width = 100;
+		//this.height = 100;
+		//this.scale = 0.5;
 	}
 	definePhysics() {
 		/**
 		 *  Enable Physics
 		 *  This is needed for collision detection
 		 */
-		this.game.physics.arcade.enableBody(this);
+		//this.game.physics.arcade.enableBody(this);
 
 		/**
 		 *  Collide with World
@@ -54,7 +64,7 @@ class Prefab extends Phaser.TileSprite {
 		 *  If you need your prefab to remain in place
 		 *  until you move it yourself, this is your item
 		 */
-		this.body.immovable = true;
+		//this.body.immovable = true;
 
 		/**
 		 *  Bounciness
@@ -69,9 +79,12 @@ class Prefab extends Phaser.TileSprite {
 		/**
 		 *  Animations
 		 */
-		//this.animations.add('flap');
 	}
 	update() {}
 
+	// these you do NOT need in your prefab
+	static get key () {
+		return SPRITEKEY;
+	}
 }
 export default Prefab;

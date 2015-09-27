@@ -26,6 +26,5 @@ let KeyboardUtils = {
 	getStringValue    : function (code=-1) {
 		return String.fromCharCode(code) || null;
 	}
-
 };
 export default KeyboardUtils;
