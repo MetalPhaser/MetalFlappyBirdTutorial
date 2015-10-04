@@ -4,6 +4,6 @@ export default {
 		backgroundColor : '#463F54'
 	},
 	physics : {
-		gravityY : 200
+		gravityY : 1200
 	}
 }
