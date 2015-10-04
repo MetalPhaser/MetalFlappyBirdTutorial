@@ -3,6 +3,8 @@ import KeyboardUtils from '../utils/KeyboardUtils';
 import GroundPrefab from '../prefabs/GroundPrefab';
 import BackgroundPrefab from '../prefabs/BackgroundPrefab';
 import BirdPrefab from '../prefabs/BirdPrefab';
+import PipePrefab from '../prefabs/PipePrefab';
+import PipeGroupPrefab from '../prefabs/PipeGroupPrefab';
 
 
 class State extends Phaser.State {
@@ -15,7 +17,10 @@ class State extends Phaser.State {
 		this.bird = null;
 		this.ground = null;
 		this.flapKey = null;
-
+		this.ceilingPipe = null;
+		this.floorPipe = null;
+		this.pipeView = null;
+		this.pipeGenerator = null;
 
 	}
 
@@ -24,6 +29,7 @@ class State extends Phaser.State {
 		GroundPrefab.preload(this.game);
 		BackgroundPrefab.preload(this.game);
 		BirdPrefab.preload(this.game);
+		PipePrefab.preload(this.game);
 
 		this.flapKey = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		this.flapKey.onDown.add(this.flap, this);
@@ -44,6 +50,10 @@ class State extends Phaser.State {
 		this.background = new BackgroundPrefab(this.game, 0,0);
 		this.game.add.existing(this.background);
 
+		// PIPE VIEW
+		this.pipeView = this.game.add.group();
+
+
 		// GROUND
 		this.ground = new GroundPrefab(this.game, 0, 0);
 		this.ground.y =this.game.world.height - this.ground.height;
@@ -57,8 +67,23 @@ class State extends Phaser.State {
 		this.game.add.existing(this.bird);
 		this.bird.body.gravity.y = Config.physics.gravityY;
 
+		this.startPipeGenerator();
+
 		//this.game.input.keyboard.onDownCallback = this.handleKeypress.bind(this);
 	}
+
+		startPipeGenerator() {
+			this.pipeGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 2.25, this.generatePipes, this);
+			this.pipeGenerator.timer.start();
+		}
+
+		// This method will generate the pipes we need to scroll across the screen
+		generatePipes() {
+			var pipeGroup = new PipeGroupPrefab(this.game);
+			this.pipeView.add(pipeGroup);
+			pipeGroup.x = this.game.world.width;
+			this.game.add.tween(pipeGroup).to({x:-70}, 3000).start();
+		}
 
 	shutdown() {
 		//no longer listening to the spacebar key

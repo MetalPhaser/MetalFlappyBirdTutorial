@@ -1,9 +1,9 @@
 import Base from '../utils/BaseSprite';
 
-let SPRITEKEY = 'birdSprite';
-let IMAGEPATH = 'images/bird.png';
+let SPRITEKEY = 'pipeSprite';
+let IMAGEPATH = 'images/pipes.png';
 
-class Prefab extends Base {
+class PipePrefab extends Base {
 	// keep this method in your prefab
 	constructor(game, x, y) {
 		super(game, x, y, SPRITEKEY);
@@ -19,19 +19,9 @@ class Prefab extends Base {
 		}
 
 		//game.load.image(SPRITEKEY, IMAGEPATH);
-        game.load.spritesheet(SPRITEKEY, IMAGEPATH, 34, 24, 3);
+        game.load.spritesheet(SPRITEKEY, IMAGEPATH, 54, 320, 2);
 	}
 
-    playFlap() {
-        this.animations.play('flap', 12, true);
-    }
-
-    flap() {
-        console.log("I'm trying!");
-        this.body.velocity.y -= 350;
-        //this.angle -= 10;
-        this.game.add.tween(this).to({angle: -20}, 500).start();
-    }
 
 	// these are optional
 	defineGeometry() {
@@ -40,7 +30,7 @@ class Prefab extends Base {
 		 *  If you need a new point to position with and
 		 *  rotate around change the anchor point
 		 */
-		this.anchor.setTo(0.5, 0.5);
+		//this.anchor.setTo(0.5, 0.5);
 
 		/**
 		 *  Set Size
@@ -55,7 +45,7 @@ class Prefab extends Base {
 		 *  Enable Physics
 		 *  This is needed for collision detection
 		 */
-		this.game.physics.arcade.enableBody(this);
+		//this.game.physics.arcade.enableBody(this);
 
 		/**
 		 *  Collide with World
@@ -92,18 +82,19 @@ class Prefab extends Base {
 		 *  Animations
 		 *  This is needed for collision detection
 		 */
-		this.animations.add('flap');
-        this.playFlap();
+		this.animations.add('ceiling', [0]);
+		this.animations.add('floor', [1]);
+        //this.playFlap();
 	}
-	update() {
-        if(this.angle < 90) {
-            this.angle +=1;
-        }
-    }
 
-	// these you do NOT need in your prefab
-	static get key () {
-		return SPRITEKEY;
+	playFloor() {
+		this.animations.play('floor', 1, true);
 	}
+	playCeiling() {
+		this.animations.play('ceiling', 1, true);
+	}
+
+	update() {}
+
 }
-export default Prefab;
+export default PipePrefab;
