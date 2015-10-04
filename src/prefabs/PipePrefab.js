@@ -1,7 +1,7 @@
 import Base from '../utils/BaseSprite'
 
-let SPRITEKEY = 'birdSprite';
-let IMAGEPATH = 'images/bird.png';
+let SPRITEKEY = 'pipeSprite';
+let IMAGEPATH = 'images/pipes.png';
 
 class Prefab extends Base {
 	// keep this method in your prefab
@@ -11,24 +11,17 @@ class Prefab extends Base {
 		this.defineGeometry();
 		this.definePhysics();
 		this.defineAnimations();
+
+		// by default
+		this.playCeiling();
 	}
 	// keep this method in your prefab
 	static preload (game) {
 		if ( !game ) {
 			throw new ReferenceError('Game reference was empty');
 		}
-		game.load.spritesheet(SPRITEKEY, IMAGEPATH, 34, 24, 3);
+		game.load.spritesheet(SPRITEKEY, IMAGEPATH, 54, 320, 2);
 	}
-
-	flap() {
-		this.body.velocity.y -= 350;
-		this.game.add.tween(this).to({angle: -40}, 500).start();
-	}
-
-	playFlap() {
-		this.animations.play('flap', 12, true);
-	}
-
 	// these are optional
 	defineGeometry() {
 		/**
@@ -36,7 +29,7 @@ class Prefab extends Base {
 		 *  If you need a new point to position with and
 		 *  rotate around change the anchor point
 		 */
-		this.anchor.setTo(0.5, 0.5);
+		//this.anchor.setTo(0.5, 0.5);
 
 		/**
 		 *  Set Size
@@ -51,7 +44,7 @@ class Prefab extends Base {
 		 *  Enable Physics
 		 *  This is needed for collision detection
 		 */
-		this.game.physics.arcade.enableBody(this);
+		//this.game.physics.arcade.enableBody(this);
 
 		/**
 		 *  Collide with World
@@ -87,26 +80,18 @@ class Prefab extends Base {
 		/**
 		 *  Animations
 		 */
-		this.animations.add('flap');
-		this.playFlap();
+		this.animations.add('ceilingPipe', [0]);
+		this.animations.add('floorPipe', [1]);
+		//this.playFlap();
 	}
-	update() {
-		if(this.angle < 90) {
-			this.angle += 1.5;
-		}
+	update() {}
 
-		//if(this.height > 24) {
-		//	this.height -= 1.5;
-		//}
-		//if(this.width > 34) {
-		//	this.width -= 1.5;
-		//}
-
+	playFloor() {
+		this.animations.play('floorPipe', 1, true);
+	}
+	playCeiling() {
+		this.animations.play('ceilingPipe', 1, true);
 	}
 
-	// these you do NOT need in your prefab
-	static get key () {
-		return SPRITEKEY;
-	}
 }
 export default Prefab;
