@@ -32,6 +32,8 @@ class PipeGroupPrefab extends Phaser.Group {
 	}
 
 	setRandomHeight(){
+		console.log("Setting random height");
+		this.y = MGU.random(200, -90); //-90, 200, valid range
 
 	}
 
