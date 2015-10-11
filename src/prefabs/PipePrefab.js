@@ -45,7 +45,7 @@ class PipePrefab extends Base {
 		 *  Enable Physics
 		 *  This is needed for collision detection
 		 */
-		//this.game.physics.arcade.enableBody(this);
+		this.game.physics.arcade.enableBody(this);
 
 		/**
 		 *  Collide with World

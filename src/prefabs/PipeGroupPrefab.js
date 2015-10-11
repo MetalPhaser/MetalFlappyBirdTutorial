@@ -1,4 +1,5 @@
 import PipePrefab from '../prefabs/PipePrefab';
+import MGU from '../utils/MGU';
 
 class PipeGroupPrefab extends Phaser.Group {
 	// keep this method in your prefab
@@ -7,6 +8,12 @@ class PipeGroupPrefab extends Phaser.Group {
 
 		this.floorPipe = null;
 		this.ceilingPipe = null;
+
+		// PLACE PIPE UPPER AND LOWER LIMITS
+		this.pipeOffsetCeiling = -200;
+		this.pipeOffsetFloor = 300;
+		this.highestPipeY = -90;
+		this.lowestPipeY = 60;
 
 		this.addPipes();
 		this.setRandomHeight();
@@ -22,10 +29,11 @@ class PipeGroupPrefab extends Phaser.Group {
 
 	addPipes() {
 		// PIPES
-		this.ceilingPipe = new PipePrefab(this.game, 0, -200);
+		this.ceilingPipe = new PipePrefab(this.game, 0, this.pipeOffsetCeiling);
 		this.add(this.ceilingPipe);
 		this.ceilingPipe.playCeiling();
-		this.floorPipe = new PipePrefab(this.game, 0, 300);
+
+		this.floorPipe = new PipePrefab(this.game, 0, this.pipeOffsetFloor);
 		this.add(this.floorPipe);
 		this.floorPipe.playFloor();
 
@@ -33,7 +41,8 @@ class PipeGroupPrefab extends Phaser.Group {
 
 	setRandomHeight(){
 		console.log("Setting random height");
-		this.y = MGU.random(200, -90); //-90, 200, valid range
+		//this.y = 60;
+		this.y = MGU.random(this.highestPipeY, this.lowestPipeY); //-90, 60, valid range
 
 	}
 

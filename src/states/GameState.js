@@ -92,6 +92,7 @@ class State extends Phaser.State {
 
 	update() {
 		this.game.physics.arcade.collide(this.bird, this.ground);
+		this.game.physics.arcade.collide(this.bird, this.pipeView);
 	}
 
 	handleKeypress(/*keyboardEvent*/) {}
