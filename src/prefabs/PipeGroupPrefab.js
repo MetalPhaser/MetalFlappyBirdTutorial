@@ -6,9 +6,14 @@ class PipeGroupPrefab extends Phaser.Group {
 	constructor(game) {
 		super(game);
 
+		this.ceilingPipe = null;
+		this.floorPipe = null;
+
 
 		this.addPipes();
+		this.setRandomHeight();
 	}
+
 	// keep this method in your prefab
 	static preload (game) {
 		if ( !game ) {
@@ -24,6 +29,12 @@ class PipeGroupPrefab extends Phaser.Group {
 		this.floorPipe = new PipePrefab(this.game, 0, 200);
 		this.add(this.floorPipe);
 		this.floorPipe.playFloor();
+	}
+	setRandomHeight() {
+		this.y=-90;//-80 200 are the bounderies.
+
+
+
 	}
 
 }
