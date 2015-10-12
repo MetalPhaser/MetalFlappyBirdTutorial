@@ -65,14 +65,14 @@ class Prefab extends Base {
 		 *  If you need your prefab to remain in place
 		 *  until you move it yourself, this is your item
 		 */
-		//this.body.immovable = true;
+		this.body.immovable = true;
 
 		/**
 		 *  Bounciness
 		 *  If you want to define a specific rebound
 		 *  value for this prefab, this is the place
 		 */
-		//this.body.bounce.x     = 10;
+		//this.body.bounce.x     = .3;
 		//this.body.bounce.y     = .5;
 
 	}

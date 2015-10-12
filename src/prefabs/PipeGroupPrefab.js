@@ -34,5 +34,11 @@ class Prefab extends Phaser.Group {
 	setRandomHeight() {
 		this.y = MGU.random(this.lowestPipeY, this.highestPipeY);
 	}
+
+
+	move() {
+		this.floorPipe.body.velocity.x = -75;
+	}
+
 }
 export default Prefab;
