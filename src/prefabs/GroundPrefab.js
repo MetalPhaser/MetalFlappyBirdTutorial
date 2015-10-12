@@ -65,12 +65,7 @@ class Prefab extends Phaser.TileSprite {
 		//this.body.bounce.y     = 10;
 
 	}
-	defineAnimations() {
-		/**
-		 *  Animations
-		 */
-		//this.animations.add('flap');
-	}
+	defineAnimations() {}
 	update() {}
 
 }

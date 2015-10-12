@@ -44,7 +44,7 @@ class Prefab extends Base {
 		 *  Enable Physics
 		 *  This is needed for collision detection
 		 */
-		//this.game.physics.arcade.enableBody(this);
+		this.game.physics.arcade.enableBody(this);
 
 		/**
 		 *  Collide with World
@@ -82,7 +82,6 @@ class Prefab extends Base {
 		 */
 		this.animations.add('ceilingPipe', [0]);
 		this.animations.add('floorPipe', [1]);
-		//this.playFlap();
 	}
 	update() {}
 
