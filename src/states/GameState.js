@@ -19,6 +19,7 @@ class State extends Phaser.State {
 		this.flapKey=null;
 		this.pipeView=null;
 
+		this.pipeSpeed = 70;
 	}
 
 
@@ -61,17 +62,29 @@ class State extends Phaser.State {
 
 		var pipeGroup = new PipeGroupPrefab(this.game);
 		this.pipeView.add(pipeGroup);
-		pipeGroup.x = this.game.world.width;
-		this.game.add.tween(pipeGroup).to({x: -70}, 3000).start();
+		pipeGroup.forEachAlive(this.resetPipeAndMove.bind(this));
+	}
+	resetPipeAndMove(pipeSprite){
+		pipeSprite.x=this.game.world.width;
+		pipeSprite.body.velocity.x=-1 * Math.abs(this.pipeSpeed);
 
 	}
+
 	shutdown() {
 		this.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
 	}
 
 	update() {
 		this.game.physics.arcade.collide(this.bird, this.ground);
+		//this.game.physics.arcade.collide(this.bird, this.pipeView);
+
+		this.pipeView.forEachAlive(function (pipeGroup) {
+			this.game.physics.arcade.collide(this.bird,pipeGroup);
+		}.bind(this));
+
+
 	}
+
 	handleKeypress(/*keyboardEvent*/) {}
 	flap(){
 		this.bird.flap();
