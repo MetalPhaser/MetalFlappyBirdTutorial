@@ -4,6 +4,10 @@ import GameState from './states/GameState';
 class Game extends Phaser.Game {
 
 	constructor() {
+
+
+console.log("YO YO YO");
+
 		super(288, 505, Phaser.AUTO, 'content', null);
 
 		this.state.add('GameState', GameState, false);

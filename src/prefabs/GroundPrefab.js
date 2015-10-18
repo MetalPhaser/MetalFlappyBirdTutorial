@@ -11,7 +11,7 @@ class GroundPrefab extends Phaser.TileSprite {
 		this.defineGeometry();
 		this.definePhysics();
 		this.defineAnimations();
-	}
+	} 
 	// keep this method in your prefab
 	static preload (game) {
 		if ( !game ) {

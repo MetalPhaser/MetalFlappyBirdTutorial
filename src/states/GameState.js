@@ -22,6 +22,8 @@ class State extends Phaser.State {
 		this.pipeView = null;
 		this.pipeGenerator = null;
 
+		this.pipeSpeed = 70;
+
 	}
 
 	preload() {
@@ -72,18 +74,26 @@ class State extends Phaser.State {
 		//this.game.input.keyboard.onDownCallback = this.handleKeypress.bind(this);
 	}
 
-		startPipeGenerator() {
-			this.pipeGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 2.25, this.generatePipes, this);
-			this.pipeGenerator.timer.start();
-		}
+	startPipeGenerator() {
+		this.pipeGenerator = this.game.time.events.loop(Phaser.Timer.SECOND * 4.25, this.generatePipes, this);
+		this.pipeGenerator.timer.start();
+	}
 
-		// This method will generate the pipes we need to scroll across the screen
-		generatePipes() {
-			var pipeGroup = new PipeGroupPrefab(this.game);
-			this.pipeView.add(pipeGroup);
-			pipeGroup.x = this.game.world.width;
-			this.game.add.tween(pipeGroup).to({x:-70}, 3000).start();
-		}
+	// This method will generate the pipes we need to scroll across the screen
+	generatePipes() {
+		var pipeGroup = new PipeGroupPrefab(this.game);
+		this.pipeView.add(pipeGroup);
+			
+		pipeGroup.forEachAlive(this.resetPipeAndMove.bind(this));
+	}
+
+	resetPipeAndMove(pipeSprite) {
+
+			pipeSprite.x = this.game.world.width;
+			pipeSprite.body.velocity.x = -1 * Math.abs(this.pipeSpeed);
+			//this.game.add.tween(pipeGroup).to({x:-70}, 3000).start();
+
+	}
 
 	shutdown() {
 		//no longer listening to the spacebar key
@@ -92,7 +102,12 @@ class State extends Phaser.State {
 
 	update() {
 		this.game.physics.arcade.collide(this.bird, this.ground);
-		this.game.physics.arcade.collide(this.bird, this.pipeView);
+		//this.game.physics.arcade.collide(this.bird, this.pipeView);
+		this.pipeView.forEachAlive(
+			function (pipeGroup){
+				this.game.physics.arcade.collide(this.bird, pipeGroup);
+
+			}.bind(this));
 	}
 
 	handleKeypress(/*keyboardEvent*/) {}

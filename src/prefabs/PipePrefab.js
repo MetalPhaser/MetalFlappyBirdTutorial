@@ -66,7 +66,7 @@ class PipePrefab extends Base {
 		 *  If you need your prefab to remain in place
 		 *  until you move it yourself, this is your item
 		 */
-		//this.body.immovable = true;
+		this.body.immovable = true;
 
 		/**
 		 *  Bounciness
