@@ -12,6 +12,7 @@ class Prefab extends Phaser.Group {
 		this.highestPipeY   = -50;
 		this.lowestPipeY    = 120;
 
+		this.pipeSpeed      = 200;
 
 		this.addPipes();
 		this.setRandomHeight();
@@ -35,9 +36,22 @@ class Prefab extends Phaser.Group {
 		this.y = MGU.random(this.lowestPipeY, this.highestPipeY);
 	}
 
+	//update() {
+	//
+	//}
 
 	move() {
-		this.floorPipe.body.velocity.x = -75;
+		this.floorPipe.x                = this.game.world.width;
+		this.floorPipe.body.velocity.x  = -1 * Math.abs(this.pipeSpeed);
+
+		this.ceilingPipe.x                = this.game.world.width;
+		this.ceilingPipe.body.velocity.x  = -1 * Math.abs(this.pipeSpeed);
+
+
+	}
+	movePipe(pipeSprite) {
+		pipeSprite.x                = this.game.world.width;
+		pipeSprite.body.velocity.x  = -1 * Math.abs(this.pipeSpeed);
 	}
 
 }

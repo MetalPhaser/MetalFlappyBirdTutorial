@@ -20,8 +20,10 @@ class State extends Phaser.State {
 		this.pipeGenerator          = null;
 		this.pipeView               = null;
 
-	}
+		this.scoreLabel             = null;
+		this.pipesCreated = 0;
 
+	}
 	preload() {
 
 		this.flapKey                = this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -41,7 +43,6 @@ class State extends Phaser.State {
 		BackgroundPrefab.preload(this.game);
 
 	}
-
 	create() {
 		// BACKGROUND
 		this.backgroundSprite = new BackgroundPrefab(this.game, 0, 0);
@@ -63,6 +64,10 @@ class State extends Phaser.State {
 		// START TIMER TO CREATE PIPES-A-FLOW'N
 		this.startPipeGenerator();
 
+
+		// CREATE OUR HUD TEXT ITEMS
+		this.defineHUD();
+
 	}
 	startPipeGenerator () {
 		this.pipeGenerator      = this.game.time.events.loop(Phaser.Timer.SECOND * 2.25, this.generatePipes, this);
@@ -72,29 +77,26 @@ class State extends Phaser.State {
 		var pipeGroup           = new PipeGroupPrefab(this.game);
 		this.pipeView.add(pipeGroup);
 
-		pipeGroup.forEachAlive(this.resetPipeAndMove.bind(this));
+		pipeGroup.move();
+
+		this.pipesCreated++;
+
 	}
-	resetPipeAndMove(pipeSprite) {
-		pipeSprite.x                = this.game.world.width;
-		pipeSprite.body.velocity.x  = -1 * Math.abs(this.pipeSpeed);
-	}
-
-
-
 	flap() {
 		this.bird.flap();
 	}
-
 	shutdown() {
 		this.game.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
 	}
-
 	update() {
 
 		this.pipeView.forEachAlive(this.checkPipeCollision.bind(this));
 		this.game.physics.arcade.collide(this.bird, this.ground);
-	}
 
+		// REDRAW SCORE BOARD
+		this.redrawScoreboard();
+
+	}
 	hitAPipe() {
 		console.log('we hit a pipe!');
 	}
@@ -102,11 +104,9 @@ class State extends Phaser.State {
 		return true;
 	}
 	handleKeypress(/*keyboardEvent*/) {}
-
 	checkPipeCollision(pipeGroup) {
 		this.game.physics.arcade.collide(this.bird, pipeGroup, this.hitAPipe, this.isCollisionASuccess, this);
 	}
-
 	renderHOLD() {
 		super.render();
 
@@ -117,9 +117,38 @@ class State extends Phaser.State {
 		this.game.debug.bodyInfo(this.bird, 32, 32);
 
 	}
-
 	renderItem(item) {
 		this.game.debug.body(item, 'rgba(255, 0, 0, 0.3)');
+	}
+	redrawScoreboard() {
+		this.scoreLabel.text    = this.pipesCreated;
+	}
+	defineHUD() {
+		this.scoreLabel                     = this.game.add.text(20, 15, '');
+
+		//	Center align
+		//this.scoreLabel.anchor.set(0.5);
+		//this.scoreLabel.align               = 'center';
+
+		//	Font style
+		this.scoreLabel.font                = 'Arial Black';
+		this.scoreLabel.fontSize            = 30;
+		this.scoreLabel.fontWeight          = 'bold';
+
+		//	Stroke color and thickness
+		this.scoreLabel.strokeThickness     = 4;
+		this.scoreLabel.stroke              = '#41523A';
+		this.scoreLabel.fill                = '#F9FF48';
+
+
+		//let grd = this.scoreLabel.context.createLinearGradient(0, 0, 0, this.scoreLabel.height);
+		////  Add in 2 color stops
+		//grd.addColorStop(0, '#C1F4AB');
+		//grd.addColorStop(1, '#526B48');
+
+		//  And apply to the Text
+		//this.scoreLabel.fill = grd;
+
 	}
 }
 export default State;
