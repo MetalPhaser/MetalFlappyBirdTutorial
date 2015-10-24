@@ -20,6 +20,8 @@ class State extends Phaser.State {
 		this.pipeView=null;
 
 		this.pipeSpeed = 70;
+		this.scoreLabel=null;
+		this.pipesCreated=0;
 	}
 
 
@@ -52,8 +54,21 @@ class State extends Phaser.State {
 		this.bird = new BirdPrefab(this.game, this.game.world.width/2,200);
 		this.game.add.existing(this.bird);
 		this.bird.body.gravity.y=Config.physics.gravityY;
+		//=========================Pipe==========================================================
 		this.startPipeGenerator();
+		//=========================HUD==========================================================
+		this.defineHUD();
 	}
+	defineHUD(){
+		this.scoreLabel=this.game.add.text(20,15,"");
+		this.scoreLabel.font="Arial Black";
+		this.scoreLabel.fontSize=30;
+		this.scoreLabel.fontWeight="bold";
+		this.scoreLabel.strokeThickness=4;
+		this.scoreLabel.stroke="#41523A";
+		this.scoreLabel.fill="#f9ff48";
+	}
+
 	startPipeGenerator(){
 		this.pipeGenerator=this.game.time.events.loop(Phaser.Timer.SECOND * 2.25, this.generatePipes, this);
 		this.pipeGenerator.timer.start();
@@ -62,13 +77,10 @@ class State extends Phaser.State {
 
 		var pipeGroup = new PipeGroupPrefab(this.game);
 		this.pipeView.add(pipeGroup);
-		pipeGroup.forEachAlive(this.resetPipeAndMove.bind(this));
+		pipeGroup.move();
+		this.pipesCreated++;
 	}
-	resetPipeAndMove(pipeSprite){
-		pipeSprite.x=this.game.world.width;
-		pipeSprite.body.velocity.x=-1 * Math.abs(this.pipeSpeed);
 
-	}
 
 	shutdown() {
 		this.input.keyboard.removeKey(Phaser.Keyboard.SPACEBAR);
@@ -81,10 +93,12 @@ class State extends Phaser.State {
 		this.pipeView.forEachAlive(function (pipeGroup) {
 			this.game.physics.arcade.collide(this.bird,pipeGroup);
 		}.bind(this));
-
+		this.redrawScoreboard();
 
 	}
-
+	redrawScoreboard(){
+		this.scoreLabel.text=this.pipesCreated;
+	}
 	handleKeypress(/*keyboardEvent*/) {}
 	flap(){
 		this.bird.flap();
@@ -94,3 +108,4 @@ class State extends Phaser.State {
 }
 export default State;
 //if the bird hits ground bring to dot menu state.
+

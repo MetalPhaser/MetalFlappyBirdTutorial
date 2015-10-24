@@ -9,7 +9,7 @@ class PipeGroupPrefab extends Phaser.Group {
 
 		this.ceilingPipe = null;
 		this.floorPipe = null;
-
+		this.pipeSpeed=200;
 
 		this.pipeOffset =220;
 		this.highestPipeY =-50;
@@ -41,6 +41,12 @@ class PipeGroupPrefab extends Phaser.Group {
 
 
 	}
+	move(){
+		this.ceilingPipe.x=this.game.world.width;
+		this.ceilingPipe.body.velocity.x=-1 * Math.abs(this.pipeSpeed);
+		this.floorPipe.x=this.game.world.width;
+		this.floorPipe.body.velocity.x=-1 * Math.abs(this.pipeSpeed);
 
+	}
 }
 export default PipeGroupPrefab;
